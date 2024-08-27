@@ -3,8 +3,8 @@ import userImg from "@/assets/images/guyAvatar.png";
 
 const Mainlayout = () => {
   return (
-    <main>
-      <header className="flex items-center justify-between py-4 pr-6 border-b pl-7 ">
+    <main className="h-dvh">
+      <header className="flex items-center h-[75px] justify-between  pr-6  border-b pl-7 ">
         <span className="flex items-center font-bold"> <span className="px-1 py-[2px] text-white rounded-sm bg-slate-900 mr-2">BH</span> Book Home</span>
         <input type="text" name="" id="" placeholder="type to search" />
         <div className="flex items-center">
@@ -13,7 +13,7 @@ const Mainlayout = () => {
           <UserAvatar />
         </div>
       </header>
-      <section className=" h-dvh">
+      <section className=" overflow-hidden h-[calc(100dvh-75px)]">
         <Outlet />
       </section>
     </main>
