@@ -1,13 +1,19 @@
-import Auth from "@/pages/Auth";
+import Login from "@/pages/Auth/Login";
+import SignUp from "@/pages/Auth/SignUp";
 import { lazy } from "react";
 
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 
 export const publicRoutes = {
     login: {
-        path: "/",
-        name: "Auth",
-        component: Auth
+        path: "/login",
+        name: "Log In",
+        component: Login
+    },
+    signUp: {
+        path: "/sign-up",
+        name: "Sign Up",
+        component: SignUp
     }
 }
 
