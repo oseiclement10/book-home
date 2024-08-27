@@ -22,6 +22,7 @@ const Login = () => {
     setSaving(true);
     try {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      navigate(protectedRoutes.dashboard.path);
     } catch (err) {
       const error = err as AxiosError;
       notification.error({
@@ -41,6 +42,11 @@ const Login = () => {
         message: error.message.replace("Firebase: Error", ""),
       });
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    loginWithPassword();
   };
 
   return (
@@ -69,7 +75,7 @@ const Login = () => {
 
             <form
               action=""
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
               method="POST"
               className="mt-8"
             >
@@ -89,8 +95,9 @@ const Login = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      name=""
-                      id=""
+                      name="email"
+                      id="email"
+                      required
                       placeholder="Enter email to get started"
                       className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
                     />
@@ -119,8 +126,9 @@ const Login = () => {
                   <div className="mt-2.5">
                     <input
                       type="password"
-                      name=""
-                      id=""
+                      name="password"
+                      id="password"
+                      required
                       value={formData.password}
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
@@ -133,18 +141,25 @@ const Login = () => {
 
                 <div>
                   <button
-                    onClick={() => loginWithPassword()}
                     type="submit"
-                    className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-black border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"
+                    className={`inline-flex items-center ${
+                      saving
+                        ? "cursor-not-allowed opacity-70"
+                        : "cursor-pointer "
+                    } justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-black border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700`}
                   >
-                    Log in
+                    {saving ? "Please wait ... " : "Login"}
                   </button>
                 </div>
 
                 <div className="mb-3">
                   <button
                     type="button"
-                    className="relative items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
+                    className={`relative ${
+                      saving
+                        ? "cursor-not-allowed opacity-70"
+                        : "cursor-pointer"
+                    } items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none`}
                     inline-flex
                     onClick={() => loginWithGoogle()}
                   >
